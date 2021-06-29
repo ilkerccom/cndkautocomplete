@@ -1,0 +1,53 @@
+[
+    {
+        "text": "Google Türkiye",
+        "id": "1",
+        "url": "https://www.google.com.tr",
+        "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Flag_of_Turkey.svg/220px-Flag_of_Turkey.svg.png"
+    },
+    {
+        "text": "Google United States",
+        "id": "2",
+        "url": "https://www.google.com"
+    },
+    {
+        "text": "Google Germany",
+        "id": "3",
+        "url": "https://www.google.de"
+    },
+    {
+        "text": "Yandex",
+        "id": "4",
+        "url": "https://www.google.com"
+    },
+    {
+        "text": "Yandex Russia",
+        "id": "5",
+        "url": "https://www.google.com"
+    },
+    {
+        "text": "Google French",
+        "id": "6",
+        "url": "https://www.google.de"
+    },
+    {
+        "text": "Google America",
+        "id": "7",
+        "url": "https://www.google.de"
+    },
+    {
+        "text": "Google Russia",
+        "id": "8",
+        "url": "https://www.google.de"
+    },
+    {
+        "text": "Google Netherlands",
+        "id": "9",
+        "url": "https://www.google.de"
+    },
+    {
+        "text": "Google Naber",
+        "id": "10",
+        "url": "https://www.google.de"
+    }
+]

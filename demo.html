@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Cndk.AutoComplete.js</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="demo.css">
+
+    <!-- Cndk.AutoComplete.js -->
+    <link href="cndk.autocomplete.css" rel="stylesheet" type="text/css">
+    <script src="cndk.autocomplete.js" type="text/javascript"></script>
+    <script>
+        var autoComplete = new CndkAutoComplete(
+            {
+                input: '#inputEmail',
+                ajaxFile: 'countries.json',
+                itemLayout: '<img style="width:15px;" src="${img}"/> ${text} (<em>${id}</em>)',
+                itemInputLayout: '${text}',
+                type: 'static'
+            });
+    </script>
+</head>
+
+<body>
+    <form class="form-signin">
+        <div class="text-center mb-4">
+            <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72"
+                height="72">
+            <h1 class="h3 mb-3 font-weight-normal">Floating labels</h1>
+            <p>Build form controls with floating labels via the <code>:placeholder-shown</code> pseudo-element. <a
+                    href="https://caniuse.com/#feat=css-placeholder-shown">Works in latest Chrome, Safari, and
+                    Firefox.</a></p>
+        </div>
+
+        <div class="form-group">
+            <input type="text" id="inputEmail" class="form-control" placeholder="Search" autofocus="">
+        </div>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+        <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2018</p>
+    </form>
+</body>
+
+</html>

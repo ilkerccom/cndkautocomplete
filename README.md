@@ -3,6 +3,8 @@
 
 ![alt text](https://i.ibb.co/G3B0vjs/Ekran-Kayd-2021-06-29-22-02-04.gif?raw=true)
 
+![alt text](https://i.ibb.co/wc76qH4/Ekran-Kayd-2021-06-29-22-10-10.gif?raw=true)
+
 Cndk.AutoComplete.js is a pure JavaScript plugin. It performs auto-complete operations within an INPUT.
 
 ## Installation

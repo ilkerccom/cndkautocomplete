@@ -1,0 +1,38 @@
+[
+    {
+        "text": "Türkiye",
+        "id": "1",
+        "flag": "https://www.countryflags.io/tr/flat/32.png",
+        "code": "+90"
+    },
+    {
+        "text": "Germany",
+        "id": "2",
+        "flag": "https://www.countryflags.io/de/flat/32.png",
+        "code": "+144"
+    },
+    {
+        "text": "Azerbaijan",
+        "id": "3",
+        "flag": "https://www.countryflags.io/az/flat/32.png",
+        "code": "+994"
+    },
+    {
+        "text": "Belgium",
+        "id": "4",
+        "flag": "https://www.countryflags.io/be/flat/32.png",
+        "code": "+32"
+    },
+    {
+        "text": "Brazil",
+        "id": "5",
+        "flag": "https://www.countryflags.io/br/flat/32.png",
+        "code": "+55"
+    },
+    {
+        "text": "Bulgaria",
+        "id": "6",
+        "flag": "https://www.countryflags.io/bg/flat/32.png",
+        "code": "+359"
+    }
+]

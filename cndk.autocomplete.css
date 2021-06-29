@@ -1,5 +1,6 @@
 
 /* Light Teme */
+
 .cndk-item-light #cndkAutoComplete {
     position: absolute;
     background: #fff;
@@ -8,6 +9,8 @@
     border-radius: 0 0 10px 10px;
     overflow: hidden;
     box-shadow: 0 0 5px #ccc;
+    max-height: 240px;
+    overflow-y: auto;
 }
 
 .cndk-item-light .cndk-item {
@@ -19,7 +22,7 @@
     color: #000;
 }
 
-.cndk-item-light .cndk-item:last-child{
+.cndk-item-light .cndk-item:last-child {
     border-bottom: none;
 }
 
@@ -36,6 +39,7 @@
 }
 
 /* Dark Teme */
+
 .cndk-item-dark #cndkAutoComplete {
     position: absolute;
     background: #333;
@@ -44,6 +48,8 @@
     border-radius: 0 0 10px 10px;
     overflow: hidden;
     box-shadow: 0 0 5px #ccc;
+    max-height: 240px;
+    overflow-y: auto;
 }
 
 .cndk-item-dark .cndk-item {
@@ -55,7 +61,7 @@
     color: #fff;
 }
 
-.cndk-item-dark .cndk-item:last-child{
+.cndk-item-dark .cndk-item:last-child {
     border-bottom: none;
 }
 

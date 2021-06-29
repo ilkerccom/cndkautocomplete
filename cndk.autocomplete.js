@@ -15,26 +15,28 @@
     // Define our constructor
     this.CndkAutoComplete = function () {
 
-        // Options default
+        // Default options
         var defaults = {
-            input: '',
-            ajaxFile: '',
+            input: '', /* Input selector with classname (.) or  ID (#) */
+            ajaxFile: '', /* Static or dynamic AjaxFile URL */
             type: 'static', /* static | dynamic */
-            minCharsToSearch: 2,
-            itemsShow: 5,
-            disableInputOnSelect: false,
-            submitFormOnEnter: false,
-            submitFormOnItemSelect: false,
-            submitValueType: '$id', /* $text | $id */
+            minCharsToSearch: 1, /* Min chars to search in items */
+            itemsShow: 5, /* Max items to show on list */
+            autoFocusWhenSelect: null, /* Focus another input element when any item has been selected */
+            disableInputOnSelect: false, /* Disable input if any item has been selected */
+            showAllOnInputClick: true, /* Shows all items when value length = 0 and options is = true */
+            submitFormOnEnter: false, /* Submit form when press Enter key on the keyboard */
+            submitFormOnItemSelect: false, /* Submit form when any item has been selected */
+            submitValueType: '${id}', /* $text | $id */
             itemLayout: '${text}', /* Can be used of any json value like in .JSON response => $id | $text | $url */
-            itemInputLayout: '${text}',
+            itemInputLayout: '${text}', /* Can be used of any json value like in .JSON response => $id | $text | $url */
             rootDivId: "cndkAutoComplete",
             itemClass: 'cndk-item',
             itemClassActive: 'cndk-item-active',
             theme: 'light' /* light | dark */
         }
 
-        // Create options by extending defaults with the passed in arugments
+        // Override default options by extending defaults with the passed in arugments
         if (arguments[0] && typeof arguments[0] === "object") {
             this.options = overrideDefaults(defaults, arguments[0]);
         }
@@ -56,8 +58,7 @@
         }
     }
 
-
-    /* ### Public methods ### */
+    /* ### PUBLIC METHODS ### */
 
     // Run
     CndkAutoComplete.prototype.run = function () {
@@ -65,11 +66,15 @@
         // Set attributes and listeners
         this.field.setAttribute('cndkAutoComplete', true);
         this.field.setAttribute('itemsShow', this.options.itemsShow);
+        this.field.setAttribute('autocomplete', 'off');
         this.field.addEventListener('input', textChange);
         this.field.addEventListener('keydown', preventSpecialKeys);
-        this.field.setAttribute('autocomplete', 'off');
 
-        // Get parent form
+        if (this.options.showAllOnInputClick && this.options.type == 'static') {
+            this.field.addEventListener('click', showAllOnInputClick);
+        }
+
+        // Get parent closest form
         form = this.field.closest("form");
         form.addEventListener('submit', formOnSubmit);
 
@@ -98,9 +103,7 @@
         container.appendChild(root);
     }
 
-
-
-    /* ### Private methods ### */
+    /* ### PRIVATE METHODS ### */
 
     // Ovverride options helper
     function overrideDefaults(source, properties) {
@@ -111,6 +114,58 @@
             }
         }
         return source;
+    }
+
+    // Show all items on input click [handler]
+    function showAllOnInputClick(e) {
+        var value = e.target.value;
+        clearList();
+        if(value.length == 0) showAllItems();
+    }
+
+    // This method shows all items in static json file
+    function showAllItems() {
+
+        // Reset current index
+        currentIndex = 0;
+
+        // Root Div
+        var root = document.getElementById(self.options.rootDivId);
+
+        // List
+        for (i = 0; i < staticContent.length; i++) {
+
+            // Item layout
+            var item = staticContent[i].text;
+
+            // Item div
+            var div = document.createElement("DIV");
+            div.setAttribute("class", self.options.itemClass + " " + self.options.itemClass + "-" + staticContent[i].id);
+            div.setAttribute("data-id", staticContent[i].id);
+            div.setAttribute("data-index", i);
+            div.addEventListener("click", clickItem);
+
+            // Rendered
+            var itemVariables = extractVariable(self.options.itemLayout);
+            var itemRender = '';
+            var layout = self.options.itemLayout;
+
+            // Resolve variables
+            for (var d = 0; d < itemVariables.length; d++) {
+                if (itemVariables[d] == 'text') {
+                    layout = layout.replace('${' + itemVariables[d] + '}', item);
+                };
+                layout = layout.replace('${' + itemVariables[d] + '}', staticContent[i][itemVariables[d]]);
+            }
+            itemRender = layout;
+
+            // Assign
+            div.innerHTML = itemRender;
+            root.appendChild(div);
+
+            // Set active item (currently first item)
+            setActiveItem();
+        }
     }
 
     // On text-change target input
@@ -201,7 +256,7 @@
     // Forms is submitting
     function formOnSubmit(e) {
         e.preventDefault();
-        if (self.options.submitValueType == '$id' && currentElement.id != '') {
+        if (self.options.submitValueType == '${id}' && currentElement.id != '') {
             self.field.value = currentElement.id;
         }
         form.submit();
@@ -233,18 +288,22 @@
 
         // Set Value of Input
         self.field.value = layout;
+
+        // Focus another input
+        if(self.options.autoFocusWhenSelect != null){
+            var anotherInput = getElement(self.options.autoFocusWhenSelect);
+            anotherInput.focus();
+        }
     }
 
     // Clicked item in results
     function clickItem(e) {
-
+        
         // Set selected element
         currentElement.name = e.target.innerText;
         currentElement.id = e.target.attributes["data-id"].value;
         currentIndex = parseInt(e.target.attributes["data-index"].value);
         itemSelected();
-
-        clearList();
     }
 
     // Prevent special keys (UP-DOWN-ENTER)
@@ -252,12 +311,17 @@
         if (e.keyCode == 38) {
             // Up-Arrow Key
             if (currentIndex > 0) currentIndex--;
-            else currentIndex = (self.options.itemsShow-1);
+            else currentIndex = (self.options.itemsShow - 1);
         }
         else if (e.keyCode == 40) {
             // Down-Arrow Key
             if (currentIndex < (getItemCount() - 1)) currentIndex++;
             else currentIndex = 0;
+        }
+        else if (e.keyCode == 27) {
+            // ESC Key
+            currentIndex = 0;
+            clearList();
         }
         else if (e.keyCode == 13) {
             // Enter Key
@@ -370,7 +434,9 @@
 
     // Hide results when click outside
     document.addEventListener("click", function (e) {
-        clearList();
+        if (e.target != getElement(self.options.input)) {
+            clearList();
+        }
     });
 
 }());
